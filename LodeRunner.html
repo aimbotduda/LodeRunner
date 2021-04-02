@@ -1,0 +1,167 @@
+<HTML>
+
+<!--
+Lode Runner!!! HTML
+
+	*** REESCREVA O TEXTO A SEGUIR! ***
+
+Autores: Rafael Riveiro (55979), Duarte Gabriel (56186)
+
+O ficheiro "LodeRunner.js" tem de incluir, logo nas primeiras linhas, um coment�rio
+inicial contendo: o nome e n�mero dos dois alunos que realizaram o projeto;
+indica��o de quais as partes do trabalho que foram feitas e das que n�o foram
+feitas (para facilitar uma corre��o sem enganos); ainda possivelmente alertando
+para alguns aspetos da implementa��o que possam ser menos �bvios para o avaliador.
+
+01234567890123456789012345678901234567890123456789012345678901234567890123456789
+-->
+
+<HEAD>
+	<meta charset="UTF-8">
+	<title>Linguagens e Ambientes de Programação (2019/2020) [Eng.Inf. - DI/FCT/UNL] - 3º projeto prático (Javascript)</title>
+	<link rel="shortcut icon" type="image/png" href="http://ctp.di.fct.unl.pt/miei/lap/projs/proj2020-3/files/images/hero_runs_left.png">
+
+	<SCRIPT TYPE="text/javascript" src="LodeRunner0.js"></SCRIPT>
+	<SCRIPT TYPE="text/javascript" src="LodeRunner.js"></SCRIPT>
+
+</HEAD>
+
+
+<BODY onload="onLoad()" id="body" style="background-color: rgb(147, 194, 255);background-image: url('https://cdn.discordapp.com/attachments/591014736456450068/716724788378206288/Sem_titulo-3.png'); background-repeat: no-repeat; background-size: cover;">
+<div style="text-align: center;">
+	
+	<p><b>LodeRunner</b> -- Duarte Gabriel (56186), Rafael Riveiro (55979)</p>
+	<div id="youDied">
+		<p>
+		<img height="30" src="https://cdn.discordapp.com/attachments/591014736456450068/716393914088685618/You_Died.png">
+	</div>
+	<video id="video" width="504" height="272" autoplay muted>
+		<source src="https://cdn.discordapp.com/attachments/591014736456450068/716062425690144861/8-bit_Coffin_Dance_from._Astronomia_online-video-cutter.com.mp4" type="video/mp4">
+	</video>
+
+	<FORM NAME="form1">
+		<div id="startMenu" style="margin-left: -504px;">
+			<img src="https://cdn.discordapp.com/attachments/591014736456450068/716623674580402227/ezgif.com-video-to-gif.gif"
+			 width="506" height="273" style="position:absolute;">
+
+			<img src="https://media.discordapp.net/attachments/591014736456450068/716641660779626496/Menu_Inicial.png"
+			 width="504" height="272" style="position:absolute;border:1px solid black;">
+
+			<input type="range" min="1" max="3" value="2" class="slider" id="difficulty"
+			 style="position:absolute;margin-left:250px ;margin-top: 199px;" OnClick="setRobotSpeed();playAudioMenuButton();">
+
+			<INPUT name="start game" TYPE="button" 
+			style="position: absolute;margin-left:163px ;margin-top: 124px; padding: 11px 89px; border:none; background-color: transparent; outline:none;" 
+			OnClick="restartGame();playAudioMenuButton();">
+		</div>
+
+		<div id= "game">
+			Time:
+			<output type="number" id="time" width="10" style="text-align:center" ></output>
+			<p></p>
+			<div id="gamePaused" style="margin-left: -504px;">
+				<img  src="https://cdn.discordapp.com/attachments/591014736456450068/716465665887699015/GamePaused.png" 
+				width="504" height="272" style="position: absolute; border:1px">
+				<INPUT name="play music" TYPE="button" style="position: absolute;margin-left:47px ;margin-top: 97px; padding: 8px 79px; border:none;; background-color: transparent; outline:none;" 
+					OnClick="playAudioBackground();playAudioMenuButton();">
+				<INPUT name="pause music" TYPE="button" style="position: absolute;margin-left:299px ;margin-top: 97px; padding: 8px 79px; border:none; background-color: transparent; outline:none;"
+					OnClick="pauseAudioBackground();playAudioMenuButton();">
+				<INPUT name="restart game" TYPE="button" style="position: absolute;margin-left:47px ;margin-top: 162px; padding: 8px 79px; border:none; background-color: transparent; outline:none;" 
+					OnClick="restartGame();playAudioMenuButton();">
+				<INPUT name="quit game" TYPE="button" style="position: absolute;margin-left:299px ;margin-top: 162px; padding: 8px 79px; border:none; background-color: transparent; outline:none;" 
+					OnClick="quitGame();playAudioMenuButton();">
+				<INPUT name="show creators" TYPE="button" style="position: absolute;margin-left:47px ;margin-top: 204px; padding: 25px 206px; border:none; background-color: transparent; outline:none;" 
+					OnClick="showCreators();playAudioMenuButton();">	
+			
+				<div id="creators">
+					<img id="duarte" src="https://cdn.discordapp.com/attachments/591014736456450068/716437011807993913/Duarte.png"
+					 	width="140" style="position: absolute;margin-left:-141px ;margin-top: 68px; border:1px solid #000000;" >
+					<img id="rafael" src="https://cdn.discordapp.com/attachments/591014736456450068/716437016023400478/Rafa.png"
+						 width="140" style="position: absolute;margin-left:505px ;margin-top: 68px;  border:1px solid #000000;" >	
+				</div>
+			</div>
+			
+				
+			<CANVAS id="canvas1" width="504" height="272" style=" background-color: #ffffff;border:1px solid #000000;">
+				Your browser doesn't support the HTML5 CANVAS tag.
+			</CANVAS> <p>
+			<span>Level:
+				<output id="currentLevel">
+			</span>
+			&nbsp; &nbsp; &nbsp; &nbsp;
+			<span>
+				<img id="goldIcon" src="https://cdn.discordapp.com/attachments/591014736456450068/715333450860593213/gold.png" alt="Gold icon">
+				<output id="currentGold">
+			</span>
+			<p>
+			Click ESC to pause game and play/stop music.
+		
+		</div>
+		<p>
+		<div id="restart">
+			<img src="https://cdn.discordapp.com/attachments/591014736456450068/716654167468539914/RestartButton.png" width="140">
+			&nbsp; &nbsp; &nbsp; &nbsp;
+			<img src="https://cdn.discordapp.com/attachments/591014736456450068/716654455314972672/QuitButton.png" width="140">
+			<INPUT name="restart game" TYPE="button" style="position: absolute;margin-left: -316px;padding: 6px 69px;background-color: transparent;border:none;outline:none;"
+				OnClick="restartGame();playAudioMenuButton();">
+			<INPUT name="quit game" TYPE="button" style="position: absolute;margin-left: -140px;padding: 6px 69px;background-color: transparent;border:none;outline:none;"
+				OnClick="quitGame();playAudioMenuButton();">
+		</div>
+		<div id="winScreen">
+			<img src="https://cdn.discordapp.com/attachments/591014736456450068/716645920053133352/FinalScreen.png" width="504">
+			<p>
+			<img src="https://cdn.discordapp.com/attachments/591014736456450068/716654455314972672/QuitButton.png" width="140">
+			<INPUT name="quit game" TYPE="button" style="position: absolute;margin-left: -139px;padding: 6px 69px;background-color: transparent;border:none;outline:none;"
+				OnClick="quitGame();playAudioMenuButton();">
+			<INPUT name="original game wiki"TYPE="button" style="position: absolute;margin-left: -260px;margin-top: -210px;padding: 72px 185px;background-color: transparent;border:none ;outline:none;"
+				OnClick="playAudioMenuButton();window.open('https://en.wikipedia.org/wiki/Lode_Runner');">
+
+		</div>
+	
+
+	</FORM>
+</div>
+
+<style>
+
+.slider {
+  -webkit-appearance: none;
+  width: 199px;
+  height: 15px;
+  border-radius: 5px;
+  outline: none;
+  background:transparent;
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: transparent;
+  border: 3px solid black;
+  cursor: pointer;
+}
+
+</style>
+
+<script>
+	function showCreators(){
+		document.getElementById("creators").style.display="inline";
+		setTimeout(function(){document.getElementById("creators").style.display="none";}, 5000);
+	}
+	document.getElementById("game").style.display="none";
+	document.getElementById("gamePaused").style.display="none";
+	document.getElementById("creators").style.display="none";
+	document.getElementById("winScreen").style.display="none";
+	document.getElementById("video").style.display="none";
+	document.getElementById("restart").style.display="none";
+	document.getElementById("youDied").style.display="none";
+</script>
+
+
+</BODY>
+</HTML>
+<!-- c�digo inicial de AMD/2020 -->
+<!-- vim:set ts=4 sw=4 et: -->
